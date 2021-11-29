@@ -18,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         loading = findViewById(R.id.loadingTv_splash);
         progressBar = findViewById(R.id.progressBar_splash);
         loadingDatabase();
+
         startActivity( new Intent(SplashActivity.this, HomeActivity.class));
 
     }

@@ -1,22 +1,69 @@
 package com.example.a413project.Database.model;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.example.a413project.Database.DataBase;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataList {
-    private ArrayList<Classification> classifications;
+    private static ArrayList<Classification> list = new ArrayList<>();
+    Context context;
 
-    public DataList(){};
-
-    public void addItem(Classification c){
-        this.classifications.add(c);
-    }
-    public ArrayList<Classification> getList(){
-        return classifications;
+    public DataList(Context context) {
+        this.context = context;
     }
 
-    public void removeItem(int id){
-        classifications.remove(id);
+    public void addItem(Classification c) {
+        addItemIntoDatabase(c);
+        refreshList();
     }
+
+    public void update(Classification c){
+        upDateItem(c);
+        refreshList();
+    }
+
+    public void remove(Classification c){
+        deleteItemDatabase(c);
+        refreshList();
+    }
+
+    private void addItemIntoDatabase(Classification c){
+        new Thread(() -> {
+            DataBase.getInstance(context).getDAO().insertData(c);
+        }).start();
+    }
+
+    private void upDateItem(Classification c){
+        new Thread(()->{
+            DataBase.getInstance(context).getDAO().updateData(c);
+        }).start();
+    }
+
+    private void deleteItemDatabase(Classification c){
+        new Thread(()->{
+            DataBase.getInstance(context).getDAO().deleteData(c);
+        }).start();
+    }
+
+    public void refreshList(){
+        list.clear();
+        new Thread(() -> {
+            List<Classification> d = DataBase.getInstance(context).getDAO().selectAll();
+            for (Classification c : d) {
+                list.add(c);
+                Log.i("ACITI", c.toString());
+            }
+        }).start();
+    }
+
+    public ArrayList<Classification> getList() {
+        return list;
+    }
+
 
 
 }

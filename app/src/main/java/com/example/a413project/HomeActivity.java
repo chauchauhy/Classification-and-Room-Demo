@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.a413project.Classifies.Classifier;
 import com.example.a413project.Database.DataBase;
 import com.example.a413project.Database.model.Classification;
+import com.example.a413project.Database.model.DataList;
 import com.example.a413project.Database.model.Label;
 import com.facebook.stetho.Stetho;
 
@@ -37,33 +38,19 @@ public class HomeActivity extends AppCompatActivity {
     final int TAKE_PICTURE = 1;
     final int PERMISSION_ID = 2;
     Uri image_uri;
+    DataList dataList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         context = this;
         Stetho.initializeWithDefaults(this);
-        add();
-        show();
+        dataList = new DataList(context);
+        dataList.addItem(new Classification("Title", 99f, "views", "Path"));
+        dataList.refreshList();
     }
-    public void add(){
-        new Thread(() -> {
-            Label[] l = new Label[]{new Label("123", 123)};
-            Classification classification = new Classification( "l", 0.99f , "123", "123");
-            DataBase.getInstance(context).getDAO().insertData(classification);
 
 
-        }).start();
-
-    }
-    public void show(){
-        new Thread(()->{
-            List<Classification> d = DataBase.getInstance(context).getDAO().selectAll();
-            for (Classification c : d){
-                Log.i("ACITI", c.toString());
-            }
-        }).start();
-    }
 
     private void callClassification(Bitmap bitmap){
         try {

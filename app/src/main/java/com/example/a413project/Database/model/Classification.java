@@ -107,7 +107,7 @@ public class Classification {
                 ", confidence=" + confidence +
                 ", views='" + views + '\'' +
                 ", filePath='" + filePath + '\'' +
-                ", timeStemp='" + timeStemp + '\'' +
+                ", timeStemp='" + timeConverter() + '\'' +
                 '}';
     }
 }
