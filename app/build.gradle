@@ -1,0 +1,59 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 31
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.example.a413project"
+        minSdkVersion 24
+        targetSdkVersion 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // to avoid compress tfile file
+    aaptOptions{
+        noCompress "tflite"
+    }
+    packagingOptions{
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
+    // database dependencies
+    implementation 'androidx.room:room-runtime:2.2.5'
+    implementation 'androidx.room:room-compiler:2.2.5'
+    implementation 'androidx.room:room-testing:2.2.5'
+    implementation 'androidx.lifecycle:lifecycle-compiler:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    // stetho for debugging database
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    // tensorflow
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
+
+}
