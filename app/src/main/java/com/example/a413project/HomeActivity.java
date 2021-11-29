@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.room.Database;
 
 import android.Manifest;
 import android.content.Context;
@@ -21,7 +22,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.a413project.Classifies.Classifier;
+import com.example.a413project.Database.DataBase;
+import com.example.a413project.Database.model.Classification;
 import com.example.a413project.Database.model.Label;
+import com.facebook.stetho.Stetho;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,6 +42,27 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         context = this;
+        Stetho.initializeWithDefaults(this);
+        add();
+        show();
+    }
+    public void add(){
+        new Thread(() -> {
+            Label[] l = new Label[]{new Label("123", 123)};
+            Classification classification = new Classification( "l", 0.99f , "123", "123");
+            DataBase.getInstance(context).getDAO().insertData(classification);
+
+
+        }).start();
+
+    }
+    public void show(){
+        new Thread(()->{
+            List<Classification> d = DataBase.getInstance(context).getDAO().selectAll();
+            for (Classification c : d){
+                Log.i("ACITI", c.toString());
+            }
+        }).start();
     }
 
     private void callClassification(Bitmap bitmap){
@@ -45,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
             Classifier classifier = new Classifier(getAssets(), 224);
             List<Label> result = classifier.recognizeImage(bitmap);
             for (Label l : result){
-                Log.i("ACTIV", l.toString());
+
             }
         } catch (IOException e) {
             e.printStackTrace();

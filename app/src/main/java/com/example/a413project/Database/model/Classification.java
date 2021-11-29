@@ -1,21 +1,30 @@
 package com.example.a413project.Database.model;
 
 
+import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+@Entity(tableName = "ClassificationTable")
 public class Classification {
     // auto increase the id
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private Label[] labels;
+    private String label;
+    private float confidence;
     private String views;
     private String filePath;
     private String timeStemp;
+
+    public void setTimeStemp(String timeStemp) {
+        this.timeStemp = timeStemp;
+    }
 
     public String getTimeStemp() {
         return timeStemp;
@@ -33,12 +42,20 @@ public class Classification {
         this.id = id;
     }
 
-    public Label[] getLabels() {
-        return labels;
+    public String getLabel() {
+        return label;
     }
 
-    public void setLabels(Label[] labels) {
-        this.labels = labels;
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public float getConfidence() {
+        return confidence;
+    }
+
+    public void setConfidence(float label) {
+        this.confidence = confidence;
     }
 
     public String getViews() {
@@ -60,17 +77,19 @@ public class Classification {
     public Classification() {
     }
 
-    public Classification(Label[] labels, String views, String filePath, String timeStemp) {
-        this.labels = labels;
+    public Classification(String label, float confidence, String views, String filePath) {
+        this.label = label;
+        this.confidence = confidence;
         this.views = views;
         this.filePath = filePath;
-        this.timeStemp = timeStemp;
+        this.timeStemp = String.valueOf(System.currentTimeMillis());
     }
 
     @Ignore
-    public Classification(int id, Label[] labels, String views, String filePath) {
+    public Classification(int id, String label, float confidence, String views, String filePath) {
         this.id = id;
-        this.labels = labels;
+        this.label = label;
+        this.confidence = confidence;
         this.views = views;
         this.filePath = filePath;
         this.timeStemp = String.valueOf(System.currentTimeMillis());
@@ -78,6 +97,18 @@ public class Classification {
     public String timeConverter(){
         Date df = new java.util.Date(Long.parseLong(timeStemp));
         return new SimpleDateFormat("MM dd yyyy hh:mma").format(df);
+    }
+
+    @Override
+    public String toString() {
+        return "Classification{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", confidence=" + confidence +
+                ", views='" + views + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", timeStemp='" + timeStemp + '\'' +
+                '}';
     }
 }
 

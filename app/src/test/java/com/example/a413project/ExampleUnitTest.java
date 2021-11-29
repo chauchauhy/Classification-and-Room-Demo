@@ -16,7 +16,7 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         Label[] l = new Label[]{new Label("123", 123)};
-        Classification classification = new Classification("123", l, "123", "123");
+        Classification classification = new Classification( l, "123", "123");
         System.out.println(classification.timeConverter());
     }
 }
