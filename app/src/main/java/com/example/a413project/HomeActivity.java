@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Database;
 
 import android.Manifest;
@@ -20,7 +21,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.example.a413project.Adapter.HomePageAdapter;
 import com.example.a413project.Classifies.Classifier;
 import com.example.a413project.Database.DataBase;
 import com.example.a413project.Database.model.Classification;
@@ -39,15 +42,14 @@ public class HomeActivity extends AppCompatActivity {
     final int PERMISSION_ID = 2;
     Uri image_uri;
     DataList dataList;
+    HomePageAdapter adapter;
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        context = this;
-        Stetho.initializeWithDefaults(this);
+        initUI();
         dataList = new DataList(context);
-        dataList.addItem(new Classification("Title", 99f, "views", "Path"));
-        dataList.refreshList();
     }
 
 
@@ -62,7 +64,6 @@ public class HomeActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void createImageSelection(){
@@ -107,6 +108,12 @@ public class HomeActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissionIDs, PERMISSION_ID);
     }
 
+    private void initUI(){
+        context = this;
+        recyclerView = findViewById(R.id.recyclerViewHomePage);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -146,8 +153,10 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.about_app:
                 Toast.makeText(this, "About this app", Toast.LENGTH_LONG).show();
                 break;
-            default:
-                Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
+            case R.id.clearAll:
+                dataList.removeAll();
+                Toast.makeText(this, "All data have been remove", Toast.LENGTH_LONG).show();
+                
         }
 
         return super.onOptionsItemSelected(item);

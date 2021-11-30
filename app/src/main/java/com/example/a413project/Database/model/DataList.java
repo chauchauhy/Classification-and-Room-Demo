@@ -16,6 +16,14 @@ public class DataList {
         this.context = context;
     }
 
+    public void init(){
+        Classification c = new Classification("Title", 99, "views", "path");
+        for (int i =0; i<10; i++){
+            addItem(c);
+        }
+    }
+
+
     public void addItem(Classification c) {
         addItemIntoDatabase(c);
         refreshList();
@@ -28,6 +36,13 @@ public class DataList {
 
     public void remove(Classification c){
         deleteItemDatabase(c);
+        refreshList();
+    }
+
+    public void removeAll(){
+        new Thread(()->{
+            DataBase.getInstance(context).getDAO().removeAllData();
+        }).start();
         refreshList();
     }
 

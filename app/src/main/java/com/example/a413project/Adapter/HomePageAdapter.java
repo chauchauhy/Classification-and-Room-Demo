@@ -1,6 +1,6 @@
 package com.example.a413project.Adapter;
 
-public class HomePageAdapter {
+public class HomePageAdapter extends {
 
 
 }

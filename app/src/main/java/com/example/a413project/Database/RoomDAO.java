@@ -27,5 +27,8 @@ public interface RoomDAO {
 
     @Delete
     void deleteData(Classification classification);
+
+    @Query("DELETE FROM " + tableName)
+    void removeAllData();
 }
 
