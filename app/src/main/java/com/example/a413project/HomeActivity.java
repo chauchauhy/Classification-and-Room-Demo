@@ -67,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
             Intent i = new Intent(context, ResultActivity.class);
             i.putExtra(ResultActivity.CLASSIFICATION_CODE, c);
             startActivity(i);
+            this.finish();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,6 +149,7 @@ public class HomeActivity extends AppCompatActivity {
         dir.mkdirs();
         String filename = String.format("%d.png", System.currentTimeMillis());
         File outFile = new File(dir, filename);
+        Log.i("ACTIVI", outFile.toString());
         try{
             fileOutputStream = new FileOutputStream(outFile);
         } catch (FileNotFoundException e) {
@@ -166,7 +168,6 @@ public class HomeActivity extends AppCompatActivity {
         }
         // transfer the file to Uri (android ) not URL(JAVA)
         Uri uri = Uri.fromFile(outFile);
-        Log.i("ACTIVI", "reuslt : " + uri.toString());
         callClassification(uri);
 
 

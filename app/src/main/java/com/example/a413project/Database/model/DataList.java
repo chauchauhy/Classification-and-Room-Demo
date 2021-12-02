@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.a413project.Database.DataBase;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class DataList {
 
     public void remove(Classification c){
         deleteItemDatabase(c);
+        File file = new File(c.getFilePath());
+        boolean result = file.delete();
+        Log.i("ACTIVI", "the result of delete file" + String.valueOf(result));
         refreshList();
     }
 

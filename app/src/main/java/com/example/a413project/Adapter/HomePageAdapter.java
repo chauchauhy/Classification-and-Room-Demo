@@ -54,6 +54,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
                 i.putExtra(ResultActivity.CLASSIFICATION_CODE, c);
                 Log.i(("ACTIVI"), c.toString());
                 context.startActivity(i);
+
             }
         });
 

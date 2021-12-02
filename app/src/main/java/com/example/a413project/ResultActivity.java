@@ -91,7 +91,7 @@ public class ResultActivity extends AppCompatActivity {
     public void onSubmit(View view) {
         if (view.getId() == R.id.submitBtnResult) {
             Classification c = this.c;
-            if (!label.getText().toString().trim().equals(c.getLabel().trim())) {
+            if (!label.getText().toString().trim().toLowerCase().equals(c.getLabel().trim().toLowerCase())) {
                 c.setLabel(label.getText().toString().trim());
                 c.setConfidence(0);
             }
@@ -101,6 +101,7 @@ public class ResultActivity extends AppCompatActivity {
                 dataList.update(c);
             }
             startActivity(new Intent(context, HomeActivity.class));
+            this.finish();
         }
 
     }
@@ -116,5 +117,7 @@ public class ResultActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
 }

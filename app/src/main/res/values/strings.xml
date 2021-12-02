@@ -2,5 +2,5 @@
     <string name="app_name">413Project</string>
     <string name="clear_all">Clear All</string>
     <string name="the_detected_label_is">The detected label is</string>
-    <string name="confidenceResultText">\"The confidence is \"</string>
+    <string name="confidenceResultText">The confidence is </string>
 </resources>
