@@ -30,10 +30,13 @@ public class DataList {
     }
 
     public void remove(Classification c){
-        deleteItemDatabase(c);
+        try {
+            deleteItemDatabase(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         File file = new File(c.getFilePath());
         boolean result = file.delete();
-        Log.i("ACTIVI", "the result of delete file" + String.valueOf(result));
         refreshList();
     }
 
