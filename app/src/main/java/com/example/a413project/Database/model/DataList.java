@@ -1,6 +1,7 @@
 package com.example.a413project.Database.model;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.a413project.Database.DataBase;
@@ -9,20 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataList {
-    private static ArrayList<Classification> list = new ArrayList<>();
+    public static ArrayList<Classification> list = new ArrayList<>();
     Context context;
 
     public DataList(Context context) {
         this.context = context;
+        refreshList();
     }
-
-    public void init(){
-        Classification c = new Classification("Title", 99, "views", "path");
-        for (int i =0; i<10; i++){
-            addItem(c);
-        }
-    }
-
 
     public void addItem(Classification c) {
         addItemIntoDatabase(c);
@@ -43,7 +37,6 @@ public class DataList {
         new Thread(()->{
             DataBase.getInstance(context).getDAO().removeAllData();
         }).start();
-        refreshList();
     }
 
     private void addItemIntoDatabase(Classification c){
@@ -70,7 +63,6 @@ public class DataList {
             List<Classification> d = DataBase.getInstance(context).getDAO().selectAll();
             for (Classification c : d) {
                 list.add(c);
-                Log.i("ACITI", c.toString());
             }
         }).start();
     }
@@ -78,7 +70,5 @@ public class DataList {
     public ArrayList<Classification> getList() {
         return list;
     }
-
-
 
 }

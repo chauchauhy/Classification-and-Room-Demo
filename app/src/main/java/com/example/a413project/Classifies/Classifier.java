@@ -34,10 +34,10 @@ public class Classifier {
     private float imageStd = 255.0f;
     private float maxResult = 6; // label size
     private float threshold = 0.4f;
-
+    // input size is the witdh and heigh of the image, the delegate need to divide the image into a block/tranvage for a good classification
     public Classifier(AssetManager assetManager, int inputSize) throws IOException {
         this.inputSize = inputSize;
-        // create a interpreter to assist Tensorflow lite running
+        // create a interpreter/delegate to assist Tensorflow lite running
         Interpreter.Options options = new Interpreter.Options();
         options.setNumThreads(7);
         options.setUseNNAPI(true);
@@ -63,6 +63,7 @@ public class Classifier {
 
     }
 
+    //read the label txt file with buffer reader.
     private List<String> loadLabelList(AssetManager assetManager, String path) throws
             IOException {
         List<String> labelList = new ArrayList<>();
@@ -74,7 +75,7 @@ public class Classifier {
         reader.close();
         return labelList;
     }
-
+    // 
     public List<Label> recognizeImage(Bitmap bitmap) {
         Bitmap scaleBitmap = Bitmap.createScaledBitmap(bitmap, inputSize, inputSize, false);
         ByteBuffer byteBuffer = convertBitmapToByteBuffer(scaleBitmap);

@@ -7,12 +7,13 @@ import androidx.room.PrimaryKey;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Entity(tableName = "ClassificationTable")
-public class Classification {
+public class Classification implements Serializable {
     // auto increase the id
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -52,6 +53,10 @@ public class Classification {
 
     public float getConfidence() {
         return confidence;
+    }
+
+    public String getConfidenceWithString() {
+        return String.format("%.02f", confidence*100) + "%";
     }
 
     public void setConfidence(float label) {
@@ -96,7 +101,7 @@ public class Classification {
     }
     public String timeConverter(){
         Date df = new java.util.Date(Long.parseLong(timeStemp));
-        return new SimpleDateFormat("MM dd yyyy hh:mma").format(df);
+        return new SimpleDateFormat("MM/dd/yyyy, hh:mma").format(df);
     }
 
     @Override
