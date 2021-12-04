@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class ResultActivity extends AppCompatActivity {
     ImageView imageView;
     TextView timetemp, confidence;
     EditText label;
-    Button submit, listen;
+    ImageButton submit, listen;
     DataList dataList;
     Context context;
     boolean flag;

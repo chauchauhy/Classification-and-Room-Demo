@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,21 +53,21 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
         holder.result.setText(c.getLabel());
         viewBinderHelper.setOpenOnlyOne(true);
         viewBinderHelper.bind(holder.layout, String.valueOf(position));
+
         holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ResultActivity.class);
                 i.putExtra(ResultActivity.SHOW, false);
                 i.putExtra(ResultActivity.CLASSIFICATION_CODE, c);
-                Log.i(("ACTIVI"), c.toString());
                 context.startActivity(i);
             }
         });
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataList.remove(c);
-                Log.i("ACTIVI", "postion " + c.toString());
                 HomeActivity.adapter.notifyDataSetChanged();
         }
     });

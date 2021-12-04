@@ -142,49 +142,18 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void saveToGallery(Bitmap bitmap){
-        FileOutputStream fileOutputStream = null;
-        //get folder path
-        File file = Environment.getExternalStorageDirectory();
-        // create the image folder if not existing
-        File dir = new File(file.getAbsolutePath()+ "/pictures/Classification/pictures");
-        dir.mkdirs();
-        String filename = String.format("%d.png", System.currentTimeMillis());
-        File outFile = new File(dir, filename);
-        Log.i("ACTIVI", outFile.toString());
-        try{
-            fileOutputStream = new FileOutputStream(outFile);
-        } catch (FileNotFoundException e) {
-            Log.i("ACTIVI", e.toString());
-
-            e.printStackTrace();
-        }
-        // compress to png file with 100% quality
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-        try{
-            fileOutputStream.flush();
-            fileOutputStream.close();
-        } catch (IOException e) {
-            Log.i("ACTIVI", e.toString());
-            e.printStackTrace();
-        }
-        // transfer the file to Uri (android ) not URL(JAVA)
-        Uri uri = Uri.fromFile(outFile);
-        callClassification(uri);
-
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Uri uri;
         if (resultCode == RESULT_OK && requestCode == TAKE_PICTURE && data != null && data.getData() != null) {
             Uri image_uri = data.getData();
             try {
                 if (image_uri != null) {
                     // copy the image to self-folder (make a clone)
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), image_uri);
-                    saveToGallery(bitmap);
+                    uri = dataList.saveToGallery(bitmap);
+                    callClassification(uri);
                 } else {
                     Toast.makeText(context, "Cannot catch the image", Toast.LENGTH_LONG).show();
                 }
@@ -196,7 +165,8 @@ public class HomeActivity extends AppCompatActivity {
         } else if (resultCode == RESULT_OK && requestCode == TAKE_CARMA_CODE && data != null) {
             Uri image_uri = data.getData();
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            saveToGallery(bitmap);
+            uri = dataList.saveToGallery(bitmap);
+            callClassification(uri);
         } else {
             Log.i("ACTIVIT", "ERROR");
         }
