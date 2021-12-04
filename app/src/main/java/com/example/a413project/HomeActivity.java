@@ -45,9 +45,10 @@ public class HomeActivity extends AppCompatActivity {
     final int TAKE_PICTURE = 1;
     final int PERMISSION_ID = 2;
     DataList dataList;
-    HomePageAdapter adapter;
+    public static HomePageAdapter adapter;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+    public static final String DBRECORD = "RECORDDB";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void permissionsAction(String[] permissionIDs) {
         // shows dialog to request permission
+        // the activityCompat.requestPermission require a String array of the permission id;
         ActivityCompat.requestPermissions(this, permissionIDs, PERMISSION_ID);
     }
 
@@ -129,7 +131,6 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter.recyclerViewAction(recyclerView, adapter);
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -146,7 +147,7 @@ public class HomeActivity extends AppCompatActivity {
         //get folder path
         File file = Environment.getExternalStorageDirectory();
         // create the image folder if not existing
-        File dir = new File(file.getAbsolutePath()+ "/pictures");
+        File dir = new File(file.getAbsolutePath()+ "/pictures/Classification/pictures");
         dir.mkdirs();
         String filename = String.format("%d.png", System.currentTimeMillis());
         File outFile = new File(dir, filename);
@@ -226,6 +227,8 @@ public class HomeActivity extends AppCompatActivity {
                 DataList.list.clear();
                 Toast.makeText(context, "All data have been remove", Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
+            case android.R.id.home:
+                startActivity(new Intent(context, SplashActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.a413project.Database.DataBase;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +22,10 @@ public class DataList {
 
     public void addItem(Classification c) {
         addItemIntoDatabase(c);
-        refreshList();
     }
 
     public void update(Classification c){
         upDateItem(c);
-        refreshList();
     }
 
     public void remove(Classification c){
@@ -37,31 +36,34 @@ public class DataList {
         }
         File file = new File(c.getFilePath());
         boolean result = file.delete();
-        refreshList();
     }
 
     public void removeAll(){
         new Thread(()->{
             DataBase.getInstance(context).getDAO().removeAllData();
         }).start();
+        refreshList();
     }
 
     private void addItemIntoDatabase(Classification c){
         new Thread(() -> {
             DataBase.getInstance(context).getDAO().insertData(c);
         }).start();
+        refreshList();
     }
 
     private void upDateItem(Classification c){
         new Thread(()->{
             DataBase.getInstance(context).getDAO().updateData(c);
         }).start();
+        refreshList();
     }
 
     private void deleteItemDatabase(Classification c){
         new Thread(()->{
             DataBase.getInstance(context).getDAO().deleteData(c);
         }).start();
+        refreshList();
     }
 
     public void refreshList(){

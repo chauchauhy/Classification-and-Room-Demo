@@ -13,4 +13,12 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="item_detail">
+        <item name="android:backgroundTint">#BBDD22</item>
+        <item name="android:textColor">#FEF6EC</item>
+    </style>
+    <style name="item_delete">
+        <item name="android:backgroundTint">#EE6666</item>
+        <item name="android:textColor">#FFF5E8</item>
+    </style>
 </resources>

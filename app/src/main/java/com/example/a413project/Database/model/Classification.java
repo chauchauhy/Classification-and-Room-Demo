@@ -79,6 +79,7 @@ public class Classification implements Serializable {
         this.filePath = filePath;
     }
 
+    @Ignore
     public Classification() {
     }
 

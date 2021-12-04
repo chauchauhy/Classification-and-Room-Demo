@@ -22,6 +22,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import static com.example.a413project.Database.model.Label.unknownLabel;
+
 public class Classifier {
     private Interpreter interpreter; // the agent of the model file and application
     private String labelPath = "labels.txt";
@@ -33,7 +35,7 @@ public class Classifier {
     private int imageMean = 0;
     private float imageStd = 255.0f;
     private float maxResult = 6; // label size
-    private float threshold = 0.4f;
+    private float threshold = 0.6f; // the standard of confidence
     // input size is the witdh and heigh of the image, the delegate need to divide the image into a block/tranvage for a good classification
     public Classifier(AssetManager assetManager, int inputSize) throws IOException {
         this.inputSize = inputSize;
@@ -138,9 +140,12 @@ public class Classifier {
             if (confidence > threshold) {
                 String label = labelList.get(i);
                 if (labelList.size()<1){
-                    label = "unknown";
+                    label = unknownLabel;
                 }
                 pq.add(new Label(label, confidence));
+            }else{
+                String label = unknownLabel;
+                pq.add(new Label(label, 0));
             }
         }
 

@@ -59,7 +59,8 @@ dependencies {
     // swiperefresh layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     // swipe layout for recyclerview
-    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.2'
+//    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.2'
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 
 
 }

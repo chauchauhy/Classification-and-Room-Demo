@@ -11,15 +11,21 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.a413project.Database.model.DataList;
+
+import java.io.Serializable;
+
 public class SplashActivity extends AppCompatActivity {
     TextView loading;
     ProgressBar progressBar;
     ConstraintLayout layout;
+    DataList datalist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         layout = findViewById(R.id.contentHolder);
+        loadDataList();
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,6 +36,11 @@ public class SplashActivity extends AppCompatActivity {
         });
 
     }
+    // init the static record list from Room database
+    private void loadDataList(){
+        datalist = new DataList(this);
+    }
+
 
 
 }

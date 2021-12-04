@@ -1,5 +1,6 @@
 package com.example.a413project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,7 +76,7 @@ public class ResultActivity extends AppCompatActivity {
             }
             timetemp.setText(c.timeConverter());
             label.setText( c.getLabel() );
-            confidence.setText(getString(R.string.confidenceResultText) + c.getConfidenceWithString());
+            confidence.setText(getString(R.string.confidenceResultText) + " " + c.getConfidenceWithString());
         }
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -118,6 +120,11 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home)
+            startActivity(new Intent(context, HomeActivity.class));
 
-
+        return super.onOptionsItemSelected(item);
+    }
 }
