@@ -49,7 +49,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Classification c = dataList.getList().get(position);
-        holder.title.setText(position + 1 + " The Label is ");
+        holder.title.setText(position + 1 + context.getString(R.string.the_label_is));
         holder.result.setText(c.getLabel());
         viewBinderHelper.setOpenOnlyOne(true);
         viewBinderHelper.bind(holder.layout, String.valueOf(position));

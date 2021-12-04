@@ -23,7 +23,7 @@
             android:theme="@style/item_delete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Delete"
+            android:text="@string/delete"
             />
     </LinearLayout>
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_weight="1"
-            android:text="The label is:"
+            android:text="@string/the_label_is"
             android:textSize="30dp" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_weight="1"
-            android:text="result"
+            android:text="@string/result"
             android:textSize="30dp" />
 
 

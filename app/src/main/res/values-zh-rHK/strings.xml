@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">告訴我, 你的名字</string>
+    <string name="opening">您好，這是一個分類應用程序。 您可以使用此應用程序來識別牛、貓、狗、蜘蛛、羊、雞、馬、大象、松鼠和蝴蝶。 此外，該應用程序可以讀出動物的發音。</string>
+    <string name="alertClear">您無法刪除此項目</string>
+    <string name="labelText">檢測到的標籤是</string>
+    <string name="confidenceResultText">可能性為</string>
+    <string name="starting">點此開始</string>
+    <string name="detail">詳情</string>
+    <string name="clear_all">清除所有資料</string>
+    <string name="the_label_is">動物:</string>
+    <string name="result">標籤</string>
+    <string name="delete">刪除</string>
+</resources>

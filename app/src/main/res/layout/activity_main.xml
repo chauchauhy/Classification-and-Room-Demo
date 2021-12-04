@@ -9,6 +9,15 @@
     tools:context=".SplashActivity"
     android:focusable="true">
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/icon"
+        app:layout_constraintBottom_toTopOf="@+id/loadingTv_splash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/loadingTv_splash"
         android:layout_width="wrap_content"

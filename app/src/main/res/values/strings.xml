@@ -1,12 +1,14 @@
 <resources>
-    <string name="app_name">413Project</string>
+    <string name="app_name">Tell your name</string>
     <string name="clear_all">Clear All</string>
-    <string name="the_detected_label_is">The detected label is </string>
     <string name="confidenceResultText">The confidence is </string>
     <string name="alertClear">You cannot remove this last item </string>
-    <string name="opening">Hi, this is a classification app. you can use this application to classify cow,
-        cat, dog, spider, sheep, chicken, horse, elephant, squirrel, butterfly. Also, the application can read out the pronunciation of the animal.
+    <string name="opening">Hello, this is a classification application. You can use this application to identify cows, cats, dogs, spiders, sheep, chickens, horses, elephants, squirrels, and butterflies. In addition, the app can read out the pronunciation of animals.
     </string>
     <string name="starting"> Click here to Start</string>
     <string name="detail">Detail</string>
+    <string name="labelText">"The detected label is "</string>
+    <string name="the_label_is">The label is:</string>
+    <string name="result">result</string>
+    <string name="delete">Delete</string>
 </resources>
