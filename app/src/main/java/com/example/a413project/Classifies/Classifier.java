@@ -35,7 +35,7 @@ public class Classifier {
     private int imageMean = 0;
     private float imageStd = 255.0f;
     private float maxResult = 6; // label size
-    private float threshold = 0.6f; // the standard of confidence
+    private float threshold = 0.6f; // the standard of confidence =>60%
     // input size is the witdh and heigh of the image, the delegate need to divide the image into a block/tranvage for a good classification
     public Classifier(AssetManager assetManager, int inputSize) throws IOException {
         this.inputSize = inputSize;
@@ -47,7 +47,8 @@ public class Classifier {
         labelList = loadLabelList(assetManager, labelPath);
     }
 
-    // a huge file processor (code from tensorflow )
+    // a huge process (code from tensorflow)
+    // open file (model) --> load it into file channel
     private MappedByteBuffer loadModelFile(AssetManager assetManager, String path) throws
             IOException {
         try {
@@ -59,13 +60,12 @@ public class Classifier {
             return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
 
         } catch (Exception e) {
-            Log.i("clicked", "fail load model");
             return null;
         }
 
     }
 
-    //read the label txt file with buffer reader.
+    //read the label list with buffer reader.
     private List<String> loadLabelList(AssetManager assetManager, String path) throws
             IOException {
         List<String> labelList = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Classifier {
         reader.close();
         return labelList;
     }
-    // 
+    // image classifying
     public List<Label> recognizeImage(Bitmap bitmap) {
         Bitmap scaleBitmap = Bitmap.createScaledBitmap(bitmap, inputSize, inputSize, false);
         ByteBuffer byteBuffer = convertBitmapToByteBuffer(scaleBitmap);
@@ -124,7 +124,7 @@ public class Classifier {
     }
 
     private List<Label> getSortedResultFloat(float[][] labelProArray) {
-        // order the confidence of the label set
+        // order the confidence of the label set using compare function
         PriorityQueue<Label> pq = new PriorityQueue<>(
                 (int) maxResult,
                 new Comparator<Label>() {

@@ -11,4 +11,8 @@
     <string name="the_label_is">動物:</string>
     <string name="result">標籤</string>
     <string name="delete">刪除</string>
+    <string name="removeAll">已刪除所有數據</string>
+    <string name="tips">點擊 + 按鈕，選擇一個圖像，將其分類並讀出</string>
+    <string name="about">關於</string>
+    <string name="changed">標籤已更改，無法提供以前標籤的可信度。</string>
 </resources>

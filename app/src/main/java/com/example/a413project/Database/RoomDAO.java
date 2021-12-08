@@ -15,13 +15,13 @@ import java.util.List;
 @Dao
 public interface RoomDAO {
     String tableName = "ClassificationTable";
-
+    // insert the record to the room db
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertData(Classification classification);
-
+    // select all data
     @Query("SELECT * FROM " + tableName)
     List<Classification> selectAll();
-
+    // update the specific item (replace)
     @Update
     void updateData(Classification classification);
 

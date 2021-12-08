@@ -2,4 +2,5 @@
 <resources>
     <string name="the_label_is">The label is:</string>
     <string name="result">result</string>
+    <string name="removeAll">All data have been remove</string>
 </resources>

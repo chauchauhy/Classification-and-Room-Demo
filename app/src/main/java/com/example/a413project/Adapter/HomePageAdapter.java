@@ -54,6 +54,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
         viewBinderHelper.setOpenOnlyOne(true);
         viewBinderHelper.bind(holder.layout, String.valueOf(position));
 
+        // implement the onclick to the button;
         holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +69,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 dataList.remove(c);
+                // if deleted, update the recyclerview;
                 HomeActivity.adapter.notifyDataSetChanged();
         }
     });

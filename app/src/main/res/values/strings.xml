@@ -11,4 +11,8 @@
     <string name="the_label_is">The label is:</string>
     <string name="result">result</string>
     <string name="delete">Delete</string>
+    <string name="removeAll">All data have been removed</string>
+    <string name="tips">Click + button, select a image, classify that and read out it</string>
+    <string name="about">About</string>
+    <string name="changed">The label has changed, the confidence of previous label would not provide.</string>
 </resources>

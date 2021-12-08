@@ -167,8 +167,6 @@ public class HomeActivity extends AppCompatActivity {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             uri = dataList.saveToGallery(bitmap);
             callClassification(uri);
-        } else {
-            Log.i("ACTIVIT", "ERROR");
         }
     }
 
@@ -190,12 +188,12 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.about_app:
-                Toast.makeText(context, "About this app", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.tips, Toast.LENGTH_LONG).show();
                 break;
             case R.id.clearAll:
                 dataList.removeAll();
                 DataList.list.clear();
-                Toast.makeText(context, "All data have been remove", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.removeAll, Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
             case android.R.id.home:
                 startActivity(new Intent(context, SplashActivity.class));

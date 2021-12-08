@@ -12,7 +12,6 @@ import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,6 +29,7 @@ public class ResultActivity extends AppCompatActivity {
     Classification c;
     public static final String CLASSIFICATION_CODE = "Classification";
     public static final String SHOW = "SHOWRESULT";
+    public static final String EDITED = "EDITED";
     ImageView imageView;
     TextView timetemp, confidence;
     EditText label;
@@ -68,16 +68,18 @@ public class ResultActivity extends AppCompatActivity {
                 if(bitmap!=null) {
                     imageView.setImageBitmap(bitmap);
                 }
-                else {
-                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_error_24));
-                    Toast.makeText(context, "The image not found", Toast.LENGTH_LONG).show();
-                }
             } catch (IOException e) {
+                imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_error_24));
+                Toast.makeText(context, "The image not found", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
             timetemp.setText(c.timeConverter());
             label.setText( c.getLabel() );
-            confidence.setText(getString(R.string.confidenceResultText) + " " + c.getConfidenceWithString());
+            if(c.getEdit().equals(EDITED)){
+                confidence.setText(R.string.changed);
+            }else{
+                confidence.setText(getString(R.string.confidenceResultText) + " " + c.getConfidenceWithString());
+            }
         }
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -93,14 +95,14 @@ public class ResultActivity extends AppCompatActivity {
 
     public void onSubmit(View view) {
         if (view.getId() == R.id.submitBtnResult) {
-            Classification c = this.c;
             if (!label.getText().toString().trim().toLowerCase().equals(c.getLabel().trim().toLowerCase())) {
                 c.setLabel(label.getText().toString().trim());
-                c.setConfidence(0);
+                c.setEdit("EDITED");
             }
             if (flag) {
                 dataList.addItem(c);
             } else {
+                c.setEdit("EDITED");
                 dataList.update(c);
             }
             startActivity(new Intent(context, HomeActivity.class));

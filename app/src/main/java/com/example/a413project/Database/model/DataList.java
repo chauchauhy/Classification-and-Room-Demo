@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+// the model of the data
 public class DataList {
     public static ArrayList<Classification> list = new ArrayList<>();
     Context context;
@@ -25,15 +26,16 @@ public class DataList {
         this.context = context;
         refreshList();
     }
-
+    // add the item to the room dn
     public void addItem(Classification c) {
         addItemIntoDatabase(c);
     }
-
+    // update the item (replace)
     public void update(Classification c){
         upDateItem(c);
     }
-
+    // remove the item and try to remove the image record of the record
+    // for the future dev. it may need content provider to update/delete/insert the image
     public void remove(Classification c){
         try {
             deleteItemDatabase(c);
@@ -71,7 +73,7 @@ public class DataList {
         }).start();
         refreshList();
     }
-
+    // catch the new record from db
     public void refreshList(){
         list.clear();
         new Thread(() -> {
@@ -86,6 +88,7 @@ public class DataList {
         return list;
     }
 
+    // save to device
     public Uri saveToGallery(Bitmap bitmap){
         FileOutputStream fileOutputStream = null;
         //get folder path
@@ -95,12 +98,9 @@ public class DataList {
         dir.mkdirs();
         String filename = String.format("%d.png", System.currentTimeMillis());
         File outFile = new File(dir, filename);
-        Log.i("ACTIVI", outFile.toString());
         try{
             fileOutputStream = new FileOutputStream(outFile);
         } catch (FileNotFoundException e) {
-            Log.i("ACTIVI", e.toString());
-
             e.printStackTrace();
         }
         // compress to png file with 100% quality
@@ -109,10 +109,9 @@ public class DataList {
             fileOutputStream.flush();
             fileOutputStream.close();
         } catch (IOException e) {
-            Log.i("ACTIVI", e.toString());
             e.printStackTrace();
         }
-        // transfer the file to Uri (android ) not URL(JAVA)
+        // transfer the file to Uri (android) not URL(JAVA)
         Uri uri = Uri.fromFile(outFile);
         return uri;
 

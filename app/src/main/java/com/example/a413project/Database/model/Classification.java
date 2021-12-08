@@ -5,12 +5,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.google.android.material.textfield.TextInputLayout;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @Entity(tableName = "ClassificationTable")
 public class Classification implements Serializable {
@@ -19,7 +16,8 @@ public class Classification implements Serializable {
     private int id;
     private String label;
     private float confidence;
-    private String views;
+    // edited or not
+    private String edit;
     private String filePath;
     private String timeStemp;
 
@@ -63,12 +61,12 @@ public class Classification implements Serializable {
         this.confidence = confidence;
     }
 
-    public String getViews() {
-        return views;
+    public String getEdit() {
+        return edit;
     }
 
-    public void setViews(String views) {
-        this.views = views;
+    public void setEdit(String edit) {
+        this.edit = edit;
     }
 
     public String getFilePath() {
@@ -83,20 +81,20 @@ public class Classification implements Serializable {
     public Classification() {
     }
 
-    public Classification(String label, float confidence, String views, String filePath) {
+    public Classification(String label, float confidence, String edit, String filePath) {
         this.label = label;
         this.confidence = confidence;
-        this.views = views;
+        this.edit = edit;
         this.filePath = filePath;
         this.timeStemp = String.valueOf(System.currentTimeMillis());
     }
 
     @Ignore
-    public Classification(int id, String label, float confidence, String views, String filePath) {
+    public Classification(int id, String label, float confidence, String edit, String filePath) {
         this.id = id;
         this.label = label;
         this.confidence = confidence;
-        this.views = views;
+        this.edit = edit;
         this.filePath = filePath;
         this.timeStemp = String.valueOf(System.currentTimeMillis());
     }
@@ -111,7 +109,7 @@ public class Classification implements Serializable {
                 "id=" + id +
                 ", label='" + label + '\'' +
                 ", confidence=" + confidence +
-                ", views='" + views + '\'' +
+                ", views='" + edit + '\'' +
                 ", filePath='" + filePath + '\'' +
                 ", timeStemp='" + timeConverter() + '\'' +
                 '}';
