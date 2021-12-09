@@ -192,11 +192,12 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.clearAll:
                 dataList.removeAll();
-                DataList.list.clear();
                 Toast.makeText(context, R.string.removeAll, Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
+                break;
             case android.R.id.home:
                 startActivity(new Intent(context, SplashActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
