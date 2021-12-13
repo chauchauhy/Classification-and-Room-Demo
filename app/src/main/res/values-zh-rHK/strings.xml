@@ -15,4 +15,11 @@
     <string name="tips">點擊 + 按鈕，選擇一個圖像，將其分類並讀出</string>
     <string name="about">關於</string>
     <string name="changed">標籤已更改，無法提供以前標籤的可信度。</string>
+    <string name="readImageError">無法讀取圖像</string>
+    <string name="selectOption">選擇選項</string>
+    <string name="takePicture">拍照</string>
+    <string name="selectPictureFromGallery">選擇圖片</string>
+    <string name="cancel">取消</string>
+    <string name="selectImgPlz">請從圖庫中選擇一張圖片</string>
+
 </resources>

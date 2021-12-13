@@ -35,7 +35,7 @@ public class Classifier {
     private int imageMean = 0;
     private float imageStd = 255.0f;
     private float maxResult = 6; // label size
-    private float threshold = 0.6f; // the standard of confidence =>60%
+    private float threshold = 0.6f; // the standard of confidence =>x% (0.xf)
     // input size is the witdh and heigh of the image, the delegate need to divide the image into a block/tranvage for a good classification
     public Classifier(AssetManager assetManager, int inputSize) throws IOException {
         this.inputSize = inputSize;

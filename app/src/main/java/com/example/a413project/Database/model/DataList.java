@@ -42,8 +42,19 @@ public class DataList {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        File file = new File(c.getFilePath());
-        boolean result = file.delete();
+        try {
+            // convert String to uri
+            Uri uri = Uri.parse(c.getFilePath());
+            // getPath return uri path in mobile
+            File file = new File(uri.getPath());
+            if (file.exists()) {
+                file.delete();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void removeAll(){
@@ -95,6 +106,7 @@ public class DataList {
         File file = Environment.getExternalStorageDirectory();
         // create the image folder if not existing
         File dir = new File(file.getAbsolutePath()+ "/pictures/Classification/pictures");
+        // make directory if dir not exist
         dir.mkdirs();
         String filename = String.format("%d.png", System.currentTimeMillis());
         File outFile = new File(dir, filename);

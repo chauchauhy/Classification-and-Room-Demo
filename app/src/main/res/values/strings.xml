@@ -15,4 +15,10 @@
     <string name="tips">Click + button, select a image, classify that and read out it</string>
     <string name="about">About</string>
     <string name="changed">The label has changed, the confidence of previous label would not provide.</string>
+    <string name="readImageError">Cannot catch the image</string>
+    <string name="selectOption">Select option ...</string>
+    <string name="takePicture">New Picture</string>
+    <string name="selectPictureFromGallery">Select picture</string>
+    <string name="cancel">Cancel</string>
+    <string name="selectImgPlz">Please select an image from gallery</string>
 </resources>

@@ -8,9 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -32,17 +30,14 @@ import com.example.a413project.Database.model.Classification;
 import com.example.a413project.Database.model.DataList;
 import com.example.a413project.Database.model.Label;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     Context context;
     final int TAKE_CARMA_CODE = 0;
-    final int TAKE_PICTURE = 1;
+    final int SELECT_PICTURE = 1;
     final int PERMISSION_ID = 2;
     DataList dataList;
     public static HomePageAdapter adapter;
@@ -58,13 +53,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void callClassification(Uri image_uri) {
+    private void callClassification(Uri image_uri, Bitmap bitmapArg) {
+        Uri uri = dataList.saveToGallery(bitmapArg);
         try {
             Classifier classifier = new Classifier(getAssets(), 224);
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), image_uri);
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
             List<Label> result = classifier.recognizeImage(bitmap);
             // just only get the a high confidence result of the label
-            Classification c = new Classification(result.get(0).getLabel(), result.get(0).confidence, "0", String.valueOf(image_uri));
+            Classification c = new Classification(result.get(0).getLabel(), result.get(0).confidence, "0", String.valueOf(uri));
             Intent i = new Intent(context, ResultActivity.class);
             i.putExtra(ResultActivity.CLASSIFICATION_CODE, c);
             startActivity(i);
@@ -76,25 +72,28 @@ public class HomeActivity extends AppCompatActivity {
 
     private void createImageSelection() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final CharSequence[] options = {"New Picture", "Select picture", "Cancel"};
-        final String[] option = {"New Picture", "Select picture", "Cancel"};
-        builder.setTitle("Select options ...").setItems(options, new DialogInterface.OnClickListener() {
+        final CharSequence[] options = {getString(R.string.takePicture), getString(R.string.selectPictureFromGallery), getString(R.string.cancel)};
+        builder.setTitle(R.string.selectOption).setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (options[i].equals(option[0])) {
-                    // dismiss the dialog and open gallery for selecting image
-                    dialogInterface.dismiss();
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, TAKE_CARMA_CODE);
-                } else if (options[i].equals(option[1])) {
-                    // disappear the dialog and open camera
-                    dialogInterface.dismiss();
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Please select a image from gallary"), TAKE_PICTURE);
-                } else if (options[i].equals(option[2])) {
-                    dialogInterface.dismiss();
+                switch (i){
+                    case 0:
+                        // disappear the dialog and open camera
+                        dialogInterface.dismiss();
+                        Intent toCarera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(toCarera, TAKE_CARMA_CODE);
+                        break;
+                    case 1:
+                        // dismiss the dialog and open gallery for selecting image
+                        dialogInterface.dismiss();
+                        Intent toGallery = new Intent();
+                        toGallery.setType("image/*");
+                        toGallery.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(toGallery, getString(R.string.selectImgPlz)), SELECT_PICTURE);
+                        break;
+                    default:
+                        dialogInterface.dismiss();
+                        break;
                 }
             }
         }).setCancelable(true).create().show();
@@ -146,27 +145,25 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri;
-        if (resultCode == RESULT_OK && requestCode == TAKE_PICTURE && data != null && data.getData() != null) {
+        if (resultCode == RESULT_OK && requestCode == TAKE_CARMA_CODE && data != null) {
+            Uri image_uri = data.getData();
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            callClassification(image_uri, bitmap);
+        }else if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE && data != null && data.getData() != null) {
             Uri image_uri = data.getData();
             try {
                 if (image_uri != null) {
                     // copy the image to self-folder (make a clone)
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), image_uri);
-                    uri = dataList.saveToGallery(bitmap);
-                    callClassification(uri);
+                    callClassification(image_uri, bitmap);
                 } else {
-                    Toast.makeText(context, "Cannot catch the image", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.readImageError, Toast.LENGTH_LONG).show();
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (resultCode == RESULT_OK && requestCode == TAKE_CARMA_CODE && data != null) {
-            Uri image_uri = data.getData();
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            uri = dataList.saveToGallery(bitmap);
-            callClassification(uri);
         }
     }
 
